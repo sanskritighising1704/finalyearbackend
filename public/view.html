@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting to eSewa...</title>
+</head>
+<body>
+  <form id="esewaForm" action="https://rc-epay.esewa.com.np/api/epay/main/v2/form" method="POST">
+    <% for (const key in paymentData) { %>
+      <input type="hidden" name="<%= key %>" value="<%= paymentData[key] %>">
+    <% } %>
+  </form>
+
+  <script>
+    // Auto-submit the form when page loads
+    window.onload = function() {
+      document.getElementById('esewaForm').submit();
+    };
+  </script>
+</body>
+</html>
