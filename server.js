@@ -5,16 +5,13 @@ import dotenv from "dotenv"
 import path from "path"
 dotenv.config()
 import { fileURLToPath } from "url";
-
-
-
 import authRoutes from "./routes/authRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import esewaRoutes from "./routes/esewa-payment.js"
-
+import reviewRoutes from './routes/reviewRoutes.js';
 
 const app = express();
 
@@ -36,7 +33,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/admin', adminRoutes);
 app.use("/api/esewa",esewaRoutes)
-
+app.use('/api/reviews', reviewRoutes);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Health check route
