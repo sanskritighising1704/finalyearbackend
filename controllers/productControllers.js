@@ -73,7 +73,16 @@ export const getProductById = async (req, res) => {
 // Create product (Admin only)
 export const createProduct = async (req, res) => {
   try {
-    const product = await Product.create(req.body);
+    const productData = { ...req.body };
+
+    // Attach uploaded image paths if any files were sent via multipart/form-data
+    if (req.files && req.files.length > 0) {
+      productData.images = req.files.map(
+        (file) => `/uploads/products/${file.filename}`
+      );
+    }
+
+    const product = await Product.create(productData);
 
     res.status(201).json({
       success: true,
@@ -88,9 +97,18 @@ export const createProduct = async (req, res) => {
 // Update product (Admin only)
 export const updateProduct = async (req, res) => {
   try {
+    const updateData = { ...req.body };
+
+    // Attach uploaded image paths if new files were sent
+    if (req.files && req.files.length > 0) {
+      updateData.images = req.files.map(
+        (file) => `/uploads/products/${file.filename}`
+      );
+    }
+
     const product = await Product.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      updateData,
       { new: true, runValidators: true }
     );
 
