@@ -12,6 +12,7 @@ import productRoutes from "./routes/productRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import esewaRoutes from "./routes/esewa-payment.js"
 import reviewRoutes from './routes/reviewRoutes.js';
+import suggestionRoutes from './routes/suggestionRoutes.js';
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/admin', adminRoutes);
 app.use("/api/esewa",esewaRoutes)
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/suggestions', suggestionRoutes);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Health check route
