@@ -137,26 +137,28 @@ export const updateOrderStatus = async (req, res) => {
     if (orderStatus) updateData.orderStatus = orderStatus;
     if (paymentStatus) updateData.paymentStatus = paymentStatus;
 
-    if (orderStatus === 'delivered') {
+    if (orderStatus === "delivered") {
       updateData.deliveredAt = Date.now();
     }
 
     const order = await Order.findByIdAndUpdate(
-      req.params.id,
+      req.params.orderId,
       updateData,
       { new: true, runValidators: true }
-    ).populate('user', 'name email').populate('items.product');
+    )
+      .populate("user", "name email")
+      .populate("items.product");
 
     if (!order) {
-      return res.status(404).json({ message: 'Order not found' });
+      return res.status(404).json({ message: "Order not found" });
     }
 
     res.status(200).json({
       success: true,
-      message: 'Order updated successfully',
-      order
+      message: "Order updated successfully",
+      order,
     });
   } catch (error) {
-    res.status(500).json({ message: 'Error updating order', error: error.message });
+    res.status(500).json({ message: "Error updating order", error: error.message });
   }
 };
